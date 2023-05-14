@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+
+<BIF VERSION="0.3">
+<NETWORK>
+<NAME>FraudPredictor</NAME>
+<PROPERTY>software aGrUM</PROPERTY>
+
+<!-- Variables -->
+<VARIABLE TYPE="nature">
+	<NAME>UserBehavior</NAME>
+	<PROPERTY>user_behaviour</PROPERTY>
+	<OUTCOME>low</OUTCOME>
+	<OUTCOME>medium</OUTCOME>
+	<OUTCOME>high</OUTCOME>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>AccountAge</NAME>
+	<PROPERTY>account_age</PROPERTY>
+	<OUTCOME>0-50</OUTCOME>
+	<OUTCOME>50-60</OUTCOME>
+	<OUTCOME>70-100</OUTCOME>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>GeographicLocation</NAME>
+	<PROPERTY>georgraphic_location</PROPERTY>
+	<OUTCOME>no</OUTCOME>
+	<OUTCOME>yes</OUTCOME>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>TransactionAmount</NAME>
+	<PROPERTY>transaction_amount</PROPERTY>
+	<OUTCOME>0-350000</OUTCOME>
+	<OUTCOME>350001-700000</OUTCOME>
+	<OUTCOME>700000+</OUTCOME>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>TransactionInfo</NAME>
+	<PROPERTY>transaction_info</PROPERTY>
+	<OUTCOME>no</OUTCOME>
+	<OUTCOME>yes</OUTCOME>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>TransactionFrequency</NAME>
+	<PROPERTY>transaction_frequency</PROPERTY>
+	<OUTCOME>no</OUTCOME>
+	<OUTCOME>yes</OUTCOME>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>LikelihoodOfFraud</NAME>
+	<PROPERTY>likelihood_of_fraud</PROPERTY>
+	<OUTCOME>low</OUTCOME>
+	<OUTCOME>medium</OUTCOME>
+	<OUTCOME>high</OUTCOME>
+</VARIABLE>
+
+<!-- Probability distributions -->
+<DEFINITION>
+	<FOR>UserBehavior</FOR>
+	<GIVEN>AccountAge</GIVEN>
+	<TABLE>
+		0.6 0.15 0.25
+		0.4 0.5 0.1
+		0.05 0.8 0.15
+	</TABLE>
+</DEFINITION>
+<DEFINITION>
+	<FOR>AccountAge</FOR>
+	<TABLE>
+		0.2 0.65 0.15
+	</TABLE>
+</DEFINITION>
+<DEFINITION>
+	<FOR>GeographicLocation</FOR>
+	<TABLE>
+		0.33 0.67
+	</TABLE>
+</DEFINITION>
+<DEFINITION>
+	<FOR>TransactionAmount</FOR>
+	<TABLE>
+		0.3 0.4 0.2
+	</TABLE>
+</DEFINITION>
+<DEFINITION>
+	<FOR>TransactionInfo</FOR>
+	<GIVEN>TransactionFrequency</GIVEN>
+	<GIVEN>TransactionAmount</GIVEN>
+	<TABLE>
+		1 0
+		0.35 0.65
+		0.05 0.95
+		0.75 0.25
+		0.175 0.825
+		0 1
+	</TABLE>
+</DEFINITION>
+<DEFINITION>
+	<FOR>TransactionFrequency</FOR>
+	<TABLE>
+		0.92 0.08
+	</TABLE>
+</DEFINITION>
+<DEFINITION>
+	<FOR>LikelihoodOfFraud</FOR>
+	<GIVEN>UserBehavior</GIVEN>
+	<GIVEN>TransactionInfo</GIVEN>
+	<GIVEN>GeographicLocation</GIVEN>
+	<TABLE>
+		0 0.45 0.55
+		0.4 0.475 0.125
+		0.2 0.5 0.3
+		0.825 0.125 0.05
+		0.1 0.5 0.4
+		0.6 0.3 0.1
+		0.35 0.5 0.15
+		0.915 0.075 0.01
+		0.425 0.325 0.25
+		0.75 0.155 0.095
+		0.575 0.325 0.1
+		0.955 0.05 0.005
+	</TABLE>
+</DEFINITION>
+
+</NETWORK>
+</BIF>
